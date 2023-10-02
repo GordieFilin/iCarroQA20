@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -25,7 +26,7 @@ public class LoginTest {
     }
 
     @Test
-    public void loginPositive(){
+    public void loginPositive() throws InterruptedException {
         /*
         1. click login
         2. fill input email
@@ -34,25 +35,31 @@ public class LoginTest {
         5. validate by text: Logged in success in the element //h2[@class = 'message']
         */
 
-        WebElement btnLogin = driver.findElement(By.xpath(""));
+        WebElement btnLogin = driver.findElement(By.xpath("//a[contains(@href, '/login')]"));
         btnLogin.click();
 
-        WebElement inputEmail = driver.findElement(By.xpath(""));
+        WebElement inputEmail = driver.findElement(By.xpath("//input[@id='email']"));
         inputEmail.click();
         inputEmail.clear();
-        inputEmail.sendKeys("");
+        inputEmail.sendKeys("gordie@gmail.com");
 
-        WebElement inputPassword = driver.findElement(By.xpath(""));
+
+        WebElement inputPassword = driver.findElement(By.xpath("//input[@id='password']"));
         inputPassword.click();
         inputPassword.clear();
-        inputPassword.sendKeys("");
+        inputPassword.sendKeys("123456Aa!");
 
-        WebElement btnYalla = driver.findElement(By.xpath(""));
+
+        WebElement btnYalla = driver.findElement(By.xpath("//button[@type ='submit']"));
         btnYalla.click();
+
 
         WebElement textMessagePopUPh2 =driver.findElement(By.xpath("//h2[@class = 'message']"));
         String TextMessageH2 = textMessagePopUPh2.getText().trim().toUpperCase();
         String expectedResult ="Logged in success".toUpperCase();
+
+
+        Assert.assertEquals(TextMessageH2,expectedResult);
 
 
 

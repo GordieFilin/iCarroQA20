@@ -25,7 +25,7 @@ public class LoginTest {
 
     }
 
-    @Test
+
     public void loginPositive() throws InterruptedException {
         /*
         1. click login

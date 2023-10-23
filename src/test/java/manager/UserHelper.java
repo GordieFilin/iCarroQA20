@@ -4,7 +4,9 @@ import dto.UserDTO;
 import dto.UserDTOWith;
 import dto.UserDtoLombok;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class UserHelper extends BaseHelper{
 
@@ -31,9 +33,21 @@ public class UserHelper extends BaseHelper{
     By inputPasswordReg = By.xpath("//input[@id ='password']");
     String btnRegNewUser = "document.querySelector('#terms-of-use').click();";
 
-    By checkBoxReg = By.xpath("//input[@for ='name']");
+    String btnOkPopUpStr = "document.querySelector(`[type='button']`).click();";
+
+    By checkBoxReg = By.xpath("//label[@for ='terms-of-use']");
     By btnYallaReg = By.xpath("//button[@type ='submit']");
     By textPopUpSuccessRegH1 = By.xpath("//div[@class='dialog-container']//h1[@class='title']");
+
+    By btnLogout = By.xpath("//a[contains(@href, 'logout')]");
+
+    By btnOkPopUp = By.xpath("//button[@type='button']");
+
+    By errorMessageWrongEmailReg = By.xpath("//input[@autocomplete='email']/..//div//div");
+
+    By errorMessageIncorrectPasswordReg = By.xpath("//input[@autocomplete='new-password']/..//div//div");
+
+    By emptyEmailErrorReg = By.xpath("//input[@autocomplete='email']/..//div//div");
 
 
     public void login(UserDTO userDTO) {
@@ -69,7 +83,7 @@ public class UserHelper extends BaseHelper{
         typeTextBase(inputLastNameReg, user.getLastname());
         typeTextBase(inputEmailReg, user.getEmail());
         typeTextBase(inputPasswordReg, user.getPassword());
-       clickByXY(checkBoxReg, 10,12);
+       clickByXY(checkBoxReg, 5,15);
         // jsClickBase(btnRegNewUser);
         clickBase(btnYallaReg);
     }
@@ -77,5 +91,46 @@ public class UserHelper extends BaseHelper{
     public boolean validatePopUpMessageSuccessAfterRegistration() {
         String expectedResult = "Registered".toUpperCase();
         return isTextEqual(textPopUpSuccessRegH1, expectedResult);
+    }
+
+    public boolean validatePopUpMessageLoginIncorrect() {
+        return isTextEqual(textSuccessLoginPopUp, "\"Login or Password incorrect\"");
+    }
+
+    public boolean btnLogoutExist() {
+        return isElementExist(btnLogout);
+    }
+
+    public void logout() {
+        clickBase(btnLogout);
+    }
+
+    public void clickOkPopUpSuccessLogin() {
+        // typeTextBase(textPopUpSuccessRegH1, String.valueOf(Keys.ESCAPE));
+         jsClickBase(btnOkPopUpStr);
+        // clickByXY(btnOkPopUp, 0.5, 2);
+        clickBase(textPopUpSuccessRegH1);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Actions actions = new Actions(driver);
+        // Use the sendKeys method to simulate pressing the "Enter" key on the active element
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(Keys.ESCAPE).perform();
+    }
+
+    public boolean validateMessageIncorrectEmail() {
+        return isTextEqual(errorMessageWrongEmailReg, "Wrong email format");
+    }
+
+    public boolean validateMessageWrongPassword() {
+        return isTextEqual(errorMessageIncorrectPasswordReg, "PASSWORD MUST CONTAIN 1 UPPERCASE LETTER, 1 LOWERCASE LETTER, 1 NUMBER AND ONE SPECIAL SYMBOL OF [@$#^&*!]");
+    }
+
+    public boolean validateErrorEmptyEmailReg() {
+        return isTextEqual(emptyEmailErrorReg, "EMAIL IS REQUIRED");
     }
 }

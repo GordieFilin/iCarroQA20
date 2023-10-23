@@ -3,10 +3,14 @@ package manager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class BaseHelper {
+
+    Logger logger = LoggerFactory.getLogger(BaseHelper.class);
 
     WebDriver driver;
 
@@ -22,6 +26,9 @@ public class BaseHelper {
     private List <WebElement> findElementsBase(By locator){
         System.out.println(locator);
         return driver.findElements(locator);
+    }
+    public boolean isElementExist(By locator){
+        return findElementsBase(locator).size()>0;
     }
 
     public void clickBase(By locator){
@@ -59,13 +66,16 @@ public class BaseHelper {
 
         public void clickByXY(By locator, double down ,int right){ // 10 12
             Rectangle rectangle = findElementBase(locator).getRect();
-            int x = rectangle.getX() + right;
-            int y = (int) (rectangle.getY() + down);
+            int x = rectangle.getX() + (rectangle.getWidth() /right);
+            int y = (int) (rectangle.getY() +  (rectangle.getHeight() /down));
 
             Actions actions = new Actions(driver);
             actions.moveByOffset(x,y).click().perform();
 
         }
+    public void refreshPage() {
+        driver.navigate().refresh();;
+    }
 
     }
 

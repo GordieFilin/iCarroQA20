@@ -6,19 +6,19 @@ import org.testng.annotations.*;
 
 public class RegistrationTests extends BaseTest{
 
-//    @BeforeTest
+//    @BeforeTest(alwaysRun = true)
 //
 //    public void preconditionsLogin() {
 //        app.navigateToMainPage();
 //        logoutIfLogin();
 //    }
 //
-//    @AfterTest
+//    @AfterTest(alwaysRun = true)
 //    public void postConditionsLogin() {
 //        app.getUserHelper().clickOkPopUpSuccessLogin();
 //    }
 
-    @BeforeTest
+    @BeforeTest(alwaysRun = true)
     public void preconditionsLogin() {
         //  app.navigateToMainPage();
         logoutIfLogin();
@@ -27,7 +27,7 @@ public class RegistrationTests extends BaseTest{
         // user open web not login
     }
 
-    @AfterTest
+    @AfterTest(alwaysRun = true)
     public void postConditionsLogin() {
         app.getUserHelper().clickOkPopUpSuccessLogin();
     }
@@ -78,7 +78,7 @@ public class RegistrationTests extends BaseTest{
         Assert.assertTrue(app.getUserHelper().validateErrorEmptyEmailReg());
     }
 
-    @Test
+    @Test(groups={"regression"})
     public void positiveRegistration(){
         String email = randomUtils.generateEmail(7);
 

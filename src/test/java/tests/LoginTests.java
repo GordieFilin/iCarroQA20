@@ -9,7 +9,7 @@ import org.testng.annotations.*;
 public class LoginTests extends BaseTest {
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preconditionsLogin() {
         //  app.navigateToMainPage();
         logoutIfLogin();
@@ -18,12 +18,12 @@ public class LoginTests extends BaseTest {
         // user open web not login
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void postConditionsLogin() {
         app.getUserHelper().clickOkPopUpSuccessLogin();
     }
 
-    @Test
+    @Test(groups={"smoke"})
     public void positiveLoginUserDTO() {
         UserDTO userDTO = new UserDTO("gordie@gmail.com", "123456Aa!");
         app.getUserHelper().login(userDTO);
@@ -39,7 +39,7 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void positiveLogin() {
         UserDtoLombok userDtoLombok = UserDtoLombok.builder()
                 .email("gordie@gmail.com")

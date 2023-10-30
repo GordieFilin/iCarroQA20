@@ -133,4 +133,14 @@ public class UserHelper extends BaseHelper{
     public boolean validateErrorEmptyEmailReg() {
         return isTextEqual(emptyEmailErrorReg, "EMAIL IS REQUIRED");
     }
+
+
+    public void fillRegistrationFormNegativeTest(UserDtoLombok user) {
+        clickBase(btnOpenRegForm);
+        typeTextBase(inputNameReg, user.getName());
+        typeTextBase(inputLastNameReg, user.getLastname());
+        typeTextBase(inputEmailReg, user.getEmail());
+        typeTextBase(inputPasswordReg, user.getPassword());
+        clickBase(btnYallaReg);
+    }
 }

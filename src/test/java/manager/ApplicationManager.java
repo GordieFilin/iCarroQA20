@@ -38,7 +38,7 @@ public class ApplicationManager {
         driver.navigate().to(ConfigProperties.getProperty("url"));
         logger.info("open page: " + ConfigProperties.getProperty("url"));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.register(new WDListener());
 
         userHelper = new UserHelper(driver);

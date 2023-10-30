@@ -1,5 +1,6 @@
 package tests;
 
+import data.DataProviderLogin;
 import dto.UserDTO;
 import dto.UserDTOWith;
 import dto.UserDtoLombok;
@@ -39,25 +40,26 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test(groups = {"smoke"})
-    public void positiveLogin() {
-        UserDtoLombok userDtoLombok = UserDtoLombok.builder()
-                .email("gordie@gmail.com")
-                .password("123456Aa!")
-                .build();
+   // @Test(groups = {"smoke"}, dataProvider = "positiveDataLogin", dataProviderClass = DataProviderLogin.class)
+    @Test (dataProvider = "loginCSV", dataProviderClass = DataProviderLogin .class)
+    public void positiveLogin(UserDtoLombok userDP) {
+//        UserDtoLombok userDtoLombok = UserDtoLombok.builder()
+//                .email("gordie@gmail.com")
+//                .password("123456Aa!")
+//                .build();
 
-        app.getUserHelper().loginUserDtoLombok(userDtoLombok);
+        app.getUserHelper().loginUserDtoLombok(userDP);
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test
-    public void negativePasswordWithoutNumbers() {
-        UserDtoLombok userDtoLombok = UserDtoLombok.builder()
-                .email("gordie@gmail.com")
-                .password("refagawAa!")
-                .build();
+    @Test(dataProvider = "negativePasswordDataLogin", dataProviderClass = DataProviderLogin.class)
+    public void negativePasswordWithoutNumbers(UserDtoLombok userDP) {
+//        UserDtoLombok userDtoLombok = UserDtoLombok.builder()
+//                .email("gordie@gmail.com")
+//                .password("refagawAa!")
+//                .build();
 
-        app.getUserHelper().loginUserDtoLombok(userDtoLombok);
+        app.getUserHelper().loginUserDtoLombok(userDP);
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageLoginIncorrect());
     }
 

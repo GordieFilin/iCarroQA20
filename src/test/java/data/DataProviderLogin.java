@@ -22,8 +22,6 @@ public class DataProviderLogin {
                         .build()
         });
         return list.iterator();
-
-
     }
 
     @DataProvider

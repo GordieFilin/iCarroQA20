@@ -1,6 +1,6 @@
 package tests;
 
-import data.DataProviderLogin;
+import data.DataProviderReg;
 import dto.UserDtoLombok;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -13,10 +13,10 @@ public class RegistrationTests extends BaseTest{
         logoutIfLogin();
     }
 
-    @AfterMethod(alwaysRun = true)
-    public void postConditionsRef() {
-    app.getUserHelper().refreshPage();
-    }
+//    @AfterMethod(alwaysRun = true)
+//    public void postConditionsRef() {
+//    app.getUserHelper().refreshPage();
+//    }
 
     @Test
     public void negativeRegistrationWrongEmail(){
@@ -62,21 +62,22 @@ public class RegistrationTests extends BaseTest{
         Assert.assertTrue(app.getUserHelper().validateErrorEmptyEmailReg());
     }
 
-    @Test(groups={"regression"})
-    public void positiveRegistration(){
-        String email = randomUtils.generateEmail(7);
+    @Test(groups={"regression"}, dataProvider = "positiveDataReg", dataProviderClass = DataProviderReg.class)
+    public void positiveRegistration(UserDtoLombok userDP){
 
 
-        UserDtoLombok user = UserDtoLombok.builder()
-                .email(email)
-                .password("123456Aa!")
-                .lastname("abcd")
-                .name("testing")
-                .build();
+//        String email = randomUtils.generateEmail(7);
+//        UserDtoLombok user = UserDtoLombok.builder()
+//                .email(email)
+//                .password("123456Aa!")
+//                .lastname("abcd")
+//                .name("testing")
+//                .build();
 
-        app.getUserHelper().fillRegistrationForm(user);
+        app.getUserHelper().fillRegistrationForm(userDP);
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterRegistration());
     }
+
 
 //    @Test (dataProvider = "RegCSV", dataProviderClass = DataProviderLogin .class)
 //    public void positiveRegistration(UserDtoLombok userDP){

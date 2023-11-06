@@ -1,5 +1,6 @@
 package tests;
 
+import dto.UserDTO;
 import manager.ApplicationManager;
 import manager.TestNGListener;
 import org.slf4j.Logger;
@@ -33,6 +34,11 @@ public class BaseTest {
         if(app.getUserHelper().btnLogoutExist()){
             app.getUserHelper().logout();
         }
+    }
+
+    public void alwaysLogin(){
+        UserDTO userDTO = new UserDTO("gordie@gmail.com", "123456Aa!");
+        app.getUserHelper().login(userDTO);
     }
 
     @BeforeMethod

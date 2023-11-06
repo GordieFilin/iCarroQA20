@@ -21,6 +21,7 @@ public class ApplicationManager {
     }
     EventFiringWebDriver driver;
     UserHelper userHelper;
+    CarHelper carHelper;
 
 
     public void init(){
@@ -42,6 +43,7 @@ public class ApplicationManager {
         driver.register(new WDListener());
 
         userHelper = new UserHelper(driver);
+        carHelper = new CarHelper(driver);
         logger.info("navigated to the url: https://ilcarro.web.app/search");
 
     }
@@ -53,6 +55,10 @@ public class ApplicationManager {
     public UserHelper getUserHelper() {
         return userHelper;
     }
+    
+  public CarHelper getCarHelper(){
+        return carHelper;
+  }
 
     public void tearDown(){driver.quit();}
 }
